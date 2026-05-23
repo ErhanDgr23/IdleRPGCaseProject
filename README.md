@@ -13,7 +13,7 @@ As per the technical case instructions, here are the required details:
 ### 🚀 How to Run the Project
 1. Clone this repository to your local machine.
 2. Open the project using **Unity** (Ensure you are using a compatible version, preferably Unity 6.4 LTS or newer).
-3. In the Project window, navigate to `Assets/Scenes/` and open the **Main Scene**.
+3. In the Project window, navigate to `Assets\_CaseAssets\` and open the **CaseScene**.
 4. Set the Game window aspect ratio to a mobile portrait resolution (e.g., 1080x1920 or Simulator view) for the intended UI experience.
 5. Press the **Play** button in the Unity Editor.
 
