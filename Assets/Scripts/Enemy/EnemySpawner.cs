@@ -1,111 +1,118 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Header("Data References")]
-    public EnemyDatabase enemyDB;
-    private Camera mainCamera;
+    [Header("Enemy Data (Data)")]
+    // ScriptableObject'ten arındırılmış, doğrudan Inspector'da doldurulacak liste
+    public List<EnemyData> enemyList = new List<EnemyData>();
 
-    [Header("Spawn Area (Dikdörtgen Bölge)")]
+    [Header("Spawn Sınırları (Point A & B)")]
+    // Sahnede oluşturduğun SpawnPoint_A ve SpawnPoint_B Empty Object'leri buraya ata
     public Transform spawnPointA;
     public Transform spawnPointB;
 
-    [Header("Spawn Settings")]
-    public float initialSpawnRate = 3f;
-    public float minSpawnRate = 0.5f;
-    public float difficultyIncreaseRate = 0.02f;
-
-    [Tooltip("Nokta kamera içindeyse kaç kez yeni nokta denensin?")]
-    public int maxSpawnAttempts = 10;
+    [Header("Zorluk ve Hız Ayarları")]
+    public float initialSpawnRate = 3f; // Başlangıç spawn hızı (saniyede)
+    public float minSpawnRate = 0.5f;   // Maksimum spawn hızı (saniyede)
+    public float difficultyIncreaseRate = 0.02f; // Saniyede hız artışı
 
     private float currentSpawnRate;
     private float nextSpawnTime;
     private int totalWeight;
+    private Camera targetCamera; // Inspector'dan atanan ana kamera
 
     void Start()
     {
-        mainCamera = Camera.main;
+        // Eğer Inspector'da atanmamışsa, otomatik bulmaya çalış
+        if (targetCamera == null) targetCamera = Camera.main;
+
         currentSpawnRate = initialSpawnRate;
         CalculateTotalWeight();
+
+        // Kritik Kontrol: Sahnede mutlaka SpawnPoint'ler olmalı!
+        if (spawnPointA == null || spawnPointB == null)
+        {
+            Debug.LogError("DİKKAT: EnemySpawner objesinde SpawnPointA veya SpawnPointB atanmamış! Düşmanlar spawn olmayacak.");
+            return;
+        }
     }
 
     void Update()
     {
-        // 1. Zorluk Ölçeklendirme
-        if (currentSpawnRate > minSpawnRate)
-            currentSpawnRate -= difficultyIncreaseRate * Time.deltaTime;
+        // Eğer sistem hazır değilse güncelleme yapma
+        if (spawnPointA == null || spawnPointB == null) return;
 
-        // 2. Spawn Zamanlaması
+        // 1. Zorluk Hızını Artır (Difficulty Scaling)
+        if (currentSpawnRate > minSpawnRate)
+        {
+            currentSpawnRate -= difficultyIncreaseRate * Time.deltaTime;
+        }
+
+        // 2. Spawn Döngüsü
         if (Time.time >= nextSpawnTime)
         {
-            SpawnEnemyInValidRegion();
+            SpawnEnemy();
             nextSpawnTime = Time.time + currentSpawnRate;
         }
     }
 
+    // Ağırlıklı spawn için toplam ağırlığı hesapla
     void CalculateTotalWeight()
     {
         totalWeight = 0;
-        foreach (var enemy in enemyDB.enemies)
-            totalWeight += enemy.weight;
+        foreach (var enemy in enemyList)
+        {
+            totalWeight += enemy.spawnWeight;
+        }
     }
 
-    void SpawnEnemyInValidRegion()
+    // Düşmanı spawn et
+    void SpawnEnemy()
     {
-        if (enemyDB == null || enemyDB.enemies.Count == 0 || spawnPointA == null || spawnPointB == null) return;
+        if (enemyList.Count == 0) return;
 
-        Vector3 spawnPos = Vector3.zero;
-        bool foundValidPoint = false;
+        // 1. Koordinat Belirle: Sınırlar içinden rastgele bir nokta seç
+        Vector3 spawnPos = GetRandomPointInRegion();
 
-        // Sınırları hesapla
+        // 2. Ağırlıklı Rastgele Düşman Seç
+        GameObject selectedPrefab = GetWeightedRandomEnemy();
+
+        if (selectedPrefab != null)
+        {
+            // Düşmanı oluştur
+            Instantiate(selectedPrefab, spawnPos, Quaternion.identity);
+        }
+    }
+
+    // Ağırlıklı rastgele seçim fonksiyonu
+    GameObject GetWeightedRandomEnemy()
+    {
+        int randomNumber = Random.Range(0, totalWeight);
+        int currentSum = 0;
+
+        foreach (var enemy in enemyList)
+        {
+            currentSum += enemy.spawnWeight;
+            if (randomNumber < currentSum)
+            {
+                return enemy.prefab;
+            }
+        }
+        return null;
+    }
+
+    // İki nokta arasındaki sınırlar içinde rastgele bir nokta oluştur
+    Vector3 GetRandomPointInRegion()
+    {
+        // İki nokta arasındaki X ve Z sınırlarını hesapla
         float minX = Mathf.Min(spawnPointA.position.x, spawnPointB.position.x);
         float maxX = Mathf.Max(spawnPointA.position.x, spawnPointB.position.x);
         float minZ = Mathf.Min(spawnPointA.position.z, spawnPointB.position.z);
         float maxZ = Mathf.Max(spawnPointA.position.z, spawnPointB.position.z);
 
-        // Belirlenen alan içinde, kamera dışı nokta bulana kadar dene
-        for (int i = 0; i < maxSpawnAttempts; i++)
-        {
-            float randomX = Random.Range(minX, maxX);
-            float randomZ = Random.Range(minZ, maxZ);
-            Vector3 testPos = new Vector3(randomX, 0f, randomZ);
-
-            // Kameranın görüş alanını kontrol et
-            Vector3 screenPoint = mainCamera.WorldToViewportPoint(testPos);
-            bool isInsideCamera = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
-
-            if (!isInsideCamera)
-            {
-                spawnPos = testPos;
-                foundValidPoint = true;
-                break;
-            }
-        }
-
-        // Eğer geçerli (kamera dışı) bir nokta bulunduysa düşmanı oluştur
-        if (foundValidPoint)
-        {
-            int randomNumber = Random.Range(0, totalWeight);
-            int currentWeightSum = 0;
-
-            foreach (var enemy in enemyDB.enemies)
-            {
-                currentWeightSum += enemy.weight;
-                if (randomNumber < currentWeightSum)
-                {
-                    Instantiate(enemy.prefab, spawnPos, Quaternion.identity);
-                    break;
-                }
-            }
-        }
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (spawnPointA == null || spawnPointB == null) return;
-        Gizmos.color = Color.cyan;
-        Vector3 center = (spawnPointA.position + spawnPointB.position) / 2f;
-        Vector3 size = new Vector3(Mathf.Abs(spawnPointA.position.x - spawnPointB.position.x), 1f, Mathf.Abs(spawnPointA.position.z - spawnPointB.position.z));
-        Gizmos.DrawWireCube(center, size);
+        // Belirlenen sınırlar içinde rastgele bir pozisyon oluştur
+        // Y yüksekliği için spawnPointA'nın yüksekliğini referans alıyoruz
+        return new Vector3(Random.Range(minX, maxX), spawnPointA.position.y, Random.Range(minZ, maxZ));
     }
 }
