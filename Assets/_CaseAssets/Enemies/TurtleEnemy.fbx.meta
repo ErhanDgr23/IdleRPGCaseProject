@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 7fe66349c2794614cb06ed178b30e74e
 ModelImporter:
-  serializedVersion: 22200
+  serializedVersion: 24200
   internalIDToNameTable: []
   externalObjects:
   - first:
@@ -79,7 +79,7 @@ ModelImporter:
       takeName: Skeleton|Dead
       internalID: -3217437445807022554
       firstFrame: 40
-      lastFrame: 92
+      lastFrame: 66
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -187,6 +187,9 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
@@ -219,7 +222,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0001
+    globalScale: 0.01
     rootMotionBoneName: RootNode
     hasTranslationDoF: 0
     hasExtraRoot: 0
