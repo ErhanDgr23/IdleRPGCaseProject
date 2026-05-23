@@ -1,133 +1,95 @@
-# Noko Games - Idle RPG / Arcade Idle Technical Case
+Noko Games - Idle RPG / Arcade Idle Technical Case
 
 A mobile-focused arcade idle RPG prototype developed in Unity for the Noko Games Developer Technical Case.
 
-The project focuses on:
-- Clean and modular gameplay systems
-- Satisfying combat feedback
-- Progressive player growth
-- Idle/arcade gameplay loop
-- Mobile-friendly controls and UI
-
----
-
-# Gameplay Overview
+Gameplay Overview
 
 The player survives inside an arena while automatically attacking nearby enemies using a bow.
 
-Enemies continuously spawn with increasing intensity over time.  
+Enemies continuously spawn with increasing intensity over time.
 By defeating enemies, the player earns gold that can be used to purchase permanent stat upgrades.
 
 As the player progresses, new combat skills unlock automatically based on total kills.
 
----
-
-# Core Features
-
-## Combat System
-- Automatic enemy targeting
-- Automatic bow shooting
-- Projectile-based combat
-- Damage popup feedback
-- Arrow trail effects
-- Enemy scaling and progression
-
----
-
-# Upgrade System
+Core Features
+Combat System
+Automatic enemy targeting
+Automatic bow shooting
+Projectile-based combat
+Damage popup feedback
+Arrow trail effects
+Enemy scaling and progression
+Upgrade System
 
 Players can open the upgrade panel at any time.
-
 The game pauses while the upgrade menu is open.
 
 Available upgrades:
-- Damage
-- HP
-- Attack Speed
-- Movement Speed
+
+Damage
+HP
+Attack Speed
+Movement Speed
 
 Each upgrade directly affects gameplay and improves combat efficiency.
 
----
+Skill System
 
-# Skill System
+The game includes 3 unlockable bow skills:
 
-The game includes 3 unlockable bow skills.
+Multishot (10 kills)
 
-## Multishot
-Unlocked at 10 kills.
+Shoots 3 arrows (left, center, right)
 
-Shoots 3 arrows simultaneously:
-- Left
-- Center
-- Right
+Poison Arrow (25 kills)
 
----
+Applies damage over time
+Enemies receive green poison VFX
 
-## Poison Arrow
-Unlocked at 25 kills.
+Rain of Arrows (50 kills)
 
-Applies poison damage over time to enemies.
+Periodic arrow rain attack
+Targets up to 5 enemies simultaneously
+Weapon System
 
-Enemies receive a green visual effect while poisoned.
+The player currently uses a bow as the primary and only weapon in this prototype.
 
----
-
-## Rain of Arrows
-Unlocked at 50 kills.
-
-Every few seconds, arrows rain down from the sky onto nearby enemies.
-
-Supports up to 5 simultaneous enemy targets.
-
----
-
-# Enemy System
-
-The project includes:
-- 3 enemy types
-- Different movement speeds
-- Different health values
-- Progressive spawn scaling
-
-Enemy spawn rate increases over time to create increasing gameplay pressure.
-
----
-
-# Controls
-
-## Mobile
-- Virtual Joystick → Movement
+Combat is fully automatic
+No weapon switching system is implemented
+Designed as a base system for future weapon expansion
+Enemy System
+3 enemy types
+Different movement speeds
+Different health values
+Progressive spawn scaling
+Increasing spawn rate over time for difficulty scaling
+Controls
+Mobile
+Virtual Joystick → Movement
 
 Combat is fully automatic.
 
----
+Technical Details
+Engine
 
-# Technical Details
-
-## Engine
 Unity
 
-## Programming Language
+Programming Language
+
 C#
 
-## Architecture
-The project uses a modular gameplay architecture with separated gameplay systems.
+Architecture
 
-Main systems include:
-- Player Controller
-- Enemy AI
-- Combat System
-- Upgrade System
-- Skill System
-- Currency System
-- UI System
+The project uses a modular gameplay architecture with separated systems:
 
----
-
-# Project Structure
-
-```text
+Player Controller
+Enemy AI
+Combat System
+Upgrade System
+Skill System
+Currency System
+UI System
+Project Structure
 Scripts/
  ├── Animations
  ├── Camera
@@ -137,41 +99,37 @@ Scripts/
  ├── Other
  ├── Player
  └── UI
-```
-
----
-
-# Visual Feedback
-
-Implemented feedback systems:
-- Damage popups
-- Skill unlock popups
-- Arrow trails
-- Poison VFX
-- Combat animations
-- Skill effects
-
----
-
-# Build Target
+Visual Feedback Systems
+Damage popups
+Skill unlock popups
+Arrow trail effects
+Poison VFX
+Combat animations
+Skill effects
+Build Target
 
 Mobile Platform
 
----
+How to Run
+Open the project in Unity
+Recommended Version: Unity 2022.3 LTS
 
-# Known Limitations
+Load the main scene from:
 
-- Prototype-focused project
-- No save/load system
-- Limited enemy variety
-- Placeholder UI visuals in some areas
-- Balancing can be further improved
+Assets/Scenes/Main.unity
+Press Play to start the game
+Assets
 
----
+All assets used in this project are self-created or free-to-use placeholder assets.
+No external paid asset packs were used.
 
-# Developer
+Known Limitations
+Prototype-focused project
+No save/load system implemented
+Limited enemy variety
+Placeholder UI visuals in some areas
+Balancing can be improved
+Developer
 
 Erhan Doğru
-
-GitHub:
-https://github.com/ErhanDgr23
+GitHub: https://github.com/ErhanDgr23
