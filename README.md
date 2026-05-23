@@ -1,135 +1,189 @@
-Noko Games - Idle RPG / Arcade Idle Technical Case
+Noko Games - Idle RPG / Arcade Idle
+Technical Prototype (Publisher-Ready Build)
 
-A mobile-focused arcade idle RPG prototype developed in Unity for the Noko Games Developer Technical Case.
+A mobile-first arcade idle RPG prototype developed in Unity.
+Designed as a scalable foundation for long-term progression systems, live-ops potential, and monetization-ready idle gameplay loops.
 
-Gameplay Overview
+🎮 High-Level Overview
 
-The player survives inside an arena while automatically attacking nearby enemies using a bow.
+The player survives inside an arena where combat is fully automated using a bow-based attack system.
 
-Enemies continuously spawn with increasing intensity over time.
-By defeating enemies, the player earns gold that can be used to purchase permanent stat upgrades.
+The core loop is built around:
 
-As the player progresses, new combat skills unlock automatically based on total kills.
+Continuous enemy pressure
+Automated combat progression
+Permanent stat-based upgrades
+Skill-based power spikes tied to progression milestones
 
-Core Features
-Combat System
-Automatic enemy targeting
-Automatic bow shooting
-Projectile-based combat
-Damage popup feedback
-Arrow trail effects
-Enemy scaling and progression
-Upgrade System
+The design focuses on satisfying idle progression + arcade feedback loop clarity, optimized for mobile engagement patterns.
 
-Players can open the upgrade panel at any time.
-The game pauses while the upgrade menu is open.
+🔁 Core Gameplay Loop
+Spawn into arena
+Auto-combat enemies with bow
+Earn gold from kills
+Upgrade permanent stats
+Unlock new skills based on kill milestones
+Survive increasing enemy intensity
 
-Available upgrades:
+This loop is designed for:
 
+Short-session engagement (1–3 min loops)
+Long-term progression retention
+Idle growth satisfaction
+⚔️ Combat System
+
+The combat system is fully automated and optimized for mobile readability and feedback clarity.
+
+Key Features:
+Auto-target nearest enemies
+Projectile-based bow combat
+Frame-safe attack logic (no input dependency)
+Scalable damage system
+Visual feedback per hit (damage popups + VFX)
+Lightweight performance-friendly execution
+
+Designed to support future expansion into:
+
+Weapon variations
+Critical hit systems
+Elemental damage types
+🧠 Skill System (Progression-Based)
+
+Skills are automatically unlocked based on total kill milestones, reinforcing long-term engagement.
+
+Skills:
+
+Multishot (10 kills)
+
+Fires 3 directional arrows
+Increases early-game power spike
+
+Poison Arrow (25 kills)
+
+Damage-over-time system
+Visual poison effect applied to enemies
+
+Rain of Arrows (50 kills)
+
+Area-based periodic strike system
+Targets up to 5 enemies simultaneously
+Designed for mid/late-game power scaling
+💰 Upgrade System
+
+A permanent progression system designed for retention and scaling difficulty.
+
+Upgrades:
 Damage
 HP
 Attack Speed
 Movement Speed
+System Behavior:
+Real-time stat application
+Scales directly with combat feel
+Supports exponential difficulty scaling
+Design Intent:
+Idle RPG retention loop
+Long-term progression sink
+Future monetization hook (upgrade economy expansion ready)
+👾 Enemy System
 
-Each upgrade directly affects gameplay and improves combat efficiency.
+Designed for progressive difficulty scaling and controlled pressure increase.
 
-Skill System
-
-The game includes 3 unlockable bow skills:
-
-Multishot (10 kills)
-
-Shoots 3 arrows (left, center, right)
-
-Poison Arrow (25 kills)
-
-Applies damage over time
-Enemies receive green poison VFX
-
-Rain of Arrows (50 kills)
-
-Periodic arrow rain attack
-Targets up to 5 enemies simultaneously
-Weapon System
-
-The player currently uses a bow as the primary and only weapon in this prototype.
-
-Combat is fully automatic
-No weapon switching system is implemented
-Designed as a base system for future weapon expansion
-Enemy System
-3 enemy types
-Different movement speeds
-Different health values
-Progressive spawn scaling
-Increasing spawn rate over time for difficulty scaling
-Controls
-Mobile
+Features:
+3 enemy archetypes
+Distinct movement speeds
+Different health pools
+Dynamic spawn scaling system
+Increasing spawn rate over time
+Design Focus:
+Controlled difficulty curve
+Readable enemy behavior
+Performance-safe scaling approach
+🧭 Controls
+Mobile:
 Virtual Joystick → Movement
+Combat → Fully automatic
 
-Combat is fully automatic.
+No manual attack input required by design (idle-arcade hybrid structure).
 
-Technical Details
-Engine
+🏗 Architecture Overview
 
-Unity
+The project is built with a modular Unity architecture to support scalability and feature expansion.
 
-Programming Language
-
-C#
-
-Architecture
-
-The project uses a modular gameplay architecture with separated systems:
-
+Core Systems:
 Player Controller
-Enemy AI
+Enemy AI System
 Combat System
-Upgrade System
 Skill System
+Upgrade System
 Currency System
 UI System
-Project Structure
+Feedback/VFX System
+Design Principles:
+Decoupled gameplay systems
+Data-driven progression logic
+Expandable skill & upgrade architecture
+Mobile performance-first design
+📁 Project Structure
 Scripts/
  ├── Animations
  ├── Camera
  ├── Data
  ├── Enemy
  ├── Feedback
- ├── Other
  ├── Player
- └── UI
-Visual Feedback Systems
-Damage popups
-Skill unlock popups
+ ├── UI
+ └── Systems
+✨ Visual & Feedback Design
+
+Strong emphasis on “feel” and readability for mobile gameplay.
+
+Implemented Feedback:
+Damage popups (hit confirmation)
+Skill unlock notifications
 Arrow trail effects
-Poison VFX
-Combat animations
-Skill effects
-Build Target
+Poison VFX system
+Combat animation feedback
+Skill impact effects
+📱 Platform Target
+Primary: Mobile (Android / iOS)
+Input: Touch optimized
+Performance: Lightweight real-time combat loop
+🚀 Build & Run Instructions
+Requirements:
+Unity 2022.3 LTS (recommended)
+Steps:
+Open project in Unity Hub
 
-Mobile Platform
-
-How to Run
-Open the project in Unity
-Recommended Version: Unity 2022.3 LTS
-
-Load the main scene from:
+Load main scene:
 
 Assets/Scenes/Main.unity
-Press Play to start the game
-Assets
+Press Play (Editor)
+Build:
+Target platform: Android / iOS
+Recommended: IL2CPP + ARM64
+🔧 Design Limitations (Transparent for Evaluation)
 
-All assets used in this project are self-created or free-to-use placeholder assets.
-No external paid asset packs were used.
+This is a technical prototype, not a production release.
 
-Known Limitations
-Prototype-focused project
-No save/load system implemented
-Limited enemy variety
-Placeholder UI visuals in some areas
-Balancing can be improved
-Developer
+Known Limitations:
+No save/load system implemented yet
+UI is placeholder-level (function-first design)
+Limited enemy variety (3 archetypes only)
+No monetization layer implemented yet
+Balancing is in early iteration stage
+📈 Expansion Potential (Publisher View)
+
+This prototype is intentionally structured for scalability:
+
+Future Ready Systems:
+Weapon system expansion (melee/ranged/magic)
+Skill tree system
+Idle offline progression
+Meta progression layer
+Monetization integration (IAP / ads)
+Live-ops event system support
+👤 Developer
 
 Erhan Doğru
 GitHub: https://github.com/ErhanDgr23
